@@ -31,4 +31,8 @@ public class CommercePhone {
     @JsonBackReference
     private Commerce commerce;
 
+    public void setNumber(String number) {
+        this.number = number.replaceAll("[^a-zA-Z0-9]+", "");
+    }
+
 }

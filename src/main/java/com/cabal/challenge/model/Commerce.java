@@ -1,14 +1,12 @@
 package com.cabal.challenge.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -16,7 +14,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "COMMERCES")
+@Builder
+@Entity(name = "COMMERCE")
 @EntityListeners(AuditingEntityListener.class)
 public class Commerce {
 
@@ -26,22 +25,26 @@ public class Commerce {
 
     @Size(min = 20, max = 100)
     @Column(name = "NAME", nullable = false)
+    @Pattern(regexp = "^[a-zA-Z0-9 ]+$")
     private String name;
 
     @CNPJ
     @Column(name = "CPNJ", nullable = false)
     private String cnpj;
 
+    @OneToMany(mappedBy = "commerce", cascade = {CascadeType.ALL})
+    @JsonManagedReference
+    private List<CommercePhone> commercePhones;
+
     @OneToOne(mappedBy = "commerce", cascade = {CascadeType.ALL})
     @JsonManagedReference
-    private CommerceAddress commerceAddress;
+    private CommerceAddress commerceAddresses;
 
     @OneToMany(mappedBy = "commerce", cascade = {CascadeType.ALL})
     @JsonManagedReference
     private List<CommerceEmail> commerceEmails;
 
-    @OneToMany(mappedBy = "commerce", cascade = {CascadeType.ALL})
-    @JsonManagedReference
-    private List<CommercePhone> commercePhones;
-
+    public Commerce(long id) {
+        this.setId(id);
+    }
 }
