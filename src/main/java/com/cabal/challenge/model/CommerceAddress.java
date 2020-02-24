@@ -43,4 +43,8 @@ public class CommerceAddress {
     @JsonBackReference
     private Commerce commerce;
 
+    public void setCep(String cep) {
+        this.cep = cep.replaceAll("[^a-zA-Z0-9]+", "");
+    }
+
 }
