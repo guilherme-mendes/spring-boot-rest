@@ -1,5 +1,3 @@
-## Desafio Técnico Cabal Brasil
-
 - ### Iniciar o projeto
   - Instale em sua máquina o `Maven` e o `JDK8`.
   - `$ cd backend-cabal-challenge`
