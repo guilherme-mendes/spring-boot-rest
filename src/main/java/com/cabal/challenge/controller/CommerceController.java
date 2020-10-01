@@ -2,7 +2,15 @@ package com.cabal.challenge.controller;
 
 import com.cabal.challenge.model.Commerce;
 import com.cabal.challenge.service.CommerceService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -10,33 +18,34 @@ import java.util.List;
 @RequestMapping(path = "/api")
 public class CommerceController {
 
-    private final CommerceService commerceService;
+    @Autowired
+    private CommerceService commerceService;
 
     public CommerceController(CommerceService commerceService) {
         this.commerceService = commerceService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/commerces")
+    @GetMapping("/commerces")
     public List<Commerce> getCommerces() {
         return commerceService.getCommerces();
     }
 
-    @RequestMapping(method = RequestMethod.GET, path = "/commerces/{id}")
+    @GetMapping("/commerces/{id}")
     public Commerce getCommerceById(@PathVariable Long id) {
         return commerceService.getCommerceById(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, path = "/commerces")
+    @PostMapping("/commerces")
     public Commerce createCommerce(@RequestBody Commerce commerce) {
         return commerceService.saveCommerce(commerce);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, path = "/commerces/{id}")
+    @PutMapping("/commerces/{id}")
     public Commerce updateCommerce(@RequestBody Commerce commerce, @PathVariable Long id) {
         return commerceService.updateCommerce(commerce, id);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, path = "commerces/{id}")
+    @DeleteMapping("commerces/{id}")
     public Commerce deleteCommerce(@PathVariable Long id) {
         return commerceService.deleteCommerce(id);
     }
