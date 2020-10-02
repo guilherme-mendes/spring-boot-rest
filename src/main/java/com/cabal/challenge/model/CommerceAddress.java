@@ -39,7 +39,7 @@ public class CommerceAddress {
     @Column(name = "ADDITIONAL_ADDRESS")
     private String additionalAddress;
 
-    @OneToOne()
+    @OneToOne
     @JsonBackReference
     private Commerce commerce;
 

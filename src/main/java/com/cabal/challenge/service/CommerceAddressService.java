@@ -3,6 +3,7 @@ package com.cabal.challenge.service;
 import com.cabal.challenge.model.Commerce;
 import com.cabal.challenge.model.CommerceAddress;
 import com.cabal.challenge.repository.CommerceAddressRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -11,35 +12,32 @@ import java.util.List;
 @Service
 public class CommerceAddressService {
 
-    private final CommerceAddressRepository CommerceAddressRepository;
+    @Autowired
+    private CommerceAddressRepository commerceAddressRepository;
 
-    public CommerceAddressService(CommerceAddressRepository CommerceAddressRepository) {
-        this.CommerceAddressRepository = CommerceAddressRepository;
-    }
-
-    public CommerceAddress saveAddress(CommerceAddress CommerceAddress) {
-        return CommerceAddressRepository.save(CommerceAddress);
+    public CommerceAddress saveAddress(CommerceAddress commerceAddress) {
+        return commerceAddressRepository.save(commerceAddress);
     }
 
     public List<CommerceAddress> getAddresses() {
-        return CommerceAddressRepository.findAll();
+        return commerceAddressRepository.findAll();
     }
 
     public CommerceAddress getAddressById(Long id) {
-        return CommerceAddressRepository.findById(id)
+        return commerceAddressRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Address not found: " + id));
     }
 
-    public CommerceAddress updateAddress(CommerceAddress CommerceAddress, Long id) {
-        CommerceAddress CommerceAddressToUpdate = getAddressById(id);
-        CommerceAddressToUpdate.setCommerce(new Commerce(CommerceAddress.getCommerce().getId()));
-        CommerceAddressToUpdate.setCep(CommerceAddress.getCep());
-        CommerceAddressToUpdate.setPublicPlace(CommerceAddress.getPublicPlace());
-        CommerceAddressToUpdate.setDistrict(CommerceAddress.getDistrict());
-        CommerceAddressToUpdate.setCity(CommerceAddress.getCity());
-        CommerceAddressToUpdate.setUf(CommerceAddress.getUf());
-        CommerceAddressToUpdate.setAdditionalAddress(CommerceAddress.getAdditionalAddress());
+    public CommerceAddress updateAddress(CommerceAddress commerceAddress, Long id) {
+        CommerceAddress commerceAddressToUpdate = getAddressById(id);
+        commerceAddressToUpdate.setCommerce(new Commerce(commerceAddress.getCommerce().getId()));
+        commerceAddressToUpdate.setCep(commerceAddress.getCep());
+        commerceAddressToUpdate.setPublicPlace(commerceAddress.getPublicPlace());
+        commerceAddressToUpdate.setDistrict(commerceAddress.getDistrict());
+        commerceAddressToUpdate.setCity(commerceAddress.getCity());
+        commerceAddressToUpdate.setUf(commerceAddress.getUf());
+        commerceAddressToUpdate.setAdditionalAddress(commerceAddress.getAdditionalAddress());
 
-        return saveAddress(CommerceAddressToUpdate);
+        return saveAddress(commerceAddressToUpdate);
     }
 }

@@ -27,7 +27,7 @@ public class CommercePhone {
     @Column(name = "TYPE_NUMBER", nullable = false)
     private String typeNumber;
 
-    @OneToOne()
+    @OneToOne
     @JsonBackReference
     private Commerce commerce;
 

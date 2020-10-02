@@ -2,6 +2,7 @@ package com.cabal.challenge.service;
 
 import com.cabal.challenge.model.Commerce;
 import com.cabal.challenge.repository.CommerceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,8 @@ import java.util.List;
 @Service
 public class CommerceService {
 
-    private final CommerceRepository commerceRepository;
-
-    public CommerceService(CommerceRepository commerceRepository) {
-        this.commerceRepository = commerceRepository;
-    }
+    @Autowired
+    private CommerceRepository commerceRepository;
 
     public Commerce saveCommerce(Commerce commerce) {
         return commerceRepository.save(commerce);

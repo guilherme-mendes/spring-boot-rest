@@ -24,7 +24,7 @@ public class CommerceEmail {
     @Column(name = "EMAIL", nullable = false)
     private String email;
 
-    @OneToOne()
+    @OneToOne
     @JsonBackReference
     private Commerce commerce;
 
